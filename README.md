@@ -22,5 +22,14 @@ yarn run lint
 quasar build
 ```
 
+Gitflow
+```
+git flow feature start <nome>
+git add .
+git commit -m "titulo do commit"
+git flow feature finish <nome>
+git push
+```
+
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://v1.quasar.dev/quasar-cli/quasar-conf-js).
