@@ -1,10 +1,8 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-
+  <q-layout view="hHh lpr fFf">
     <q-page-container>
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -12,6 +10,7 @@
 export default {
   data () {
     return {
+      menuLeft: false
     }
   }
 }
