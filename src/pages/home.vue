@@ -22,7 +22,7 @@
             </q-item-section>
           </q-item>
           <template>
-            <q-item clickable v-ripple>
+            <q-item @click="$router.push('/perfil')" clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="o_account_circle" />
               </q-item-section>
@@ -149,7 +149,7 @@
             <div class="row" id="card-center">
               <q-card class="my-card text-center">
                 <q-card-section>
-                  <q-avatar size="68px" font-size="50px" color="teal" text-color="white" icon="o_help_outline" />
+                  <q-avatar @click="$router.push('/ajudafeedback')" size="68px" font-size="50px" color="teal" text-color="white" icon="o_help_outline" />
                   <p style="margin: 2px 0 0 0; color:#228176; font-weight: 500;">Ajuda e<br>Feedback</p>
                 </q-card-section>
               </q-card>

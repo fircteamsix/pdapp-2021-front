@@ -13,7 +13,10 @@ const routes = [
       { path: '/criarcampanha', component: () => import('pages/NovaCampanha.vue') },
       { path: '/informacoesuteis', component: () => import('pages/InformacoesUteis.vue') },
       { path: '/termodeuso', component: () => import('pages/TermoUso.vue') },
-      { path: '/politicadeuso', component: () => import('pages/PoliticaUso.vue') }
+      { path: '/politicadeuso', component: () => import('pages/PoliticaUso.vue') },
+      { path: '/perfil', component: () => import('pages/Perfil.vue') },
+      { path: '/templatecampanha', component: () => import('pages/TemplateCampanha.vue') },
+      { path: '/ajudafeedback', component: () => import('pages/AjudaFeedback.vue') }
     ]
   },
 

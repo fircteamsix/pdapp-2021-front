@@ -7,7 +7,7 @@
           <p style="color:#228176; font-weight: bold; font-size: 24px; text-align: center; width: 100%; ">Campanhas</p>
 
           <q-list style="margin-top:70px">
-            <q-item clickable v-ripple v-for="item in campanhas.titulo" :key="item">
+            <q-item @click="$router.push('/templatecampanha')" clickable v-ripple v-for="item in campanhas.titulo" :key="item">
               <q-item-section avatar>
                 <q-icon size="3em" style="color:#228176;" name="o_favorite_border" />
               </q-item-section>

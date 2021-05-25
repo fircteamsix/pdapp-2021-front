@@ -41,7 +41,7 @@
           <q-select style="margin-top:18px;" borderless v-model="tpSanguineo" :options="opSanguineo" label="Tipo Sanguíneo" />
 
         <div id="buttoncustom" class="row q-pa-lg justify-center">
-          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" />
+          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" to="/templatecampanha" />
           <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/home"/>
         </div>
 
