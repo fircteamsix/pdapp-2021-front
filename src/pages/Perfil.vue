@@ -4,7 +4,7 @@
         <div class="row q-pa-lg justify-center">
           <div class="col-xs-12 col-sm-12 col-md-7 col-lg-3">
             <div class="contentTop">
-              <q-icon @click="$router.push('/home')" name="o_close" size="2em" left />
+              <q-icon @click="$router.push({ path: '/home' })" name="o_close" size="2em" left />
               <div class="fotoicon column items-center" >
                 <q-avatar size="122px" style="background: #C65C44;">
                   <q-file
@@ -17,8 +17,8 @@
                   </q-file>
                   <img src="https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image.png">
                 </q-avatar>
-                <p class="nomeUsuario">João da Silva</p>
-                <p class="tpSanguineo">A+</p>
+                <p class="nomeUsuario">{{usuario.nome}}</p>
+                <p class="tpSanguineo">{{usuario.tipo_sanguineo}}</p>
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@
               </q-item>
             </q-list>
             <div id="buttoncustom" class="row q-pa-lg justify-center">
-              <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 120px;" />
+              <q-btn  color="#FFF" label="EDITAR" style="background: #228176; margin-top: 120px;" @click="$router.push({ path: '/cadastro', query: { id: $route.query.id } })"/>
               <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/home"/>
             </div>
           </div>
@@ -47,10 +47,15 @@
 </template>
 
 <script>
+import { Cookies } from 'quasar'
 export default {
   name: 'Perfil',
   data () {
     return {
+      usuario: {
+        nome: '...',
+        tipo_sanguineo: '...'
+      },
       filesImages: null,
       menu: [{
         titulo: 'Ver Campanhas',
@@ -66,7 +71,27 @@ export default {
       }]
     }
   },
-  methods: {}
+  methods: {
+    verLogin () {
+      const cookieLogin = Cookies.get('login-pdapp')
+      if (!cookieLogin) {
+        this.$router.push({ path: '/' })
+      }
+    },
+    buscarPerfil () {
+      this.$axios.get('http://localhost:3000/usuario/' + Cookies.get('login-pdapp')).then(resposta => {
+        if (resposta.status === 202) {
+          this.usuario = resposta.data.usuario
+        }
+      }).catch(erro => {
+        // em caso de erro
+      })
+    }
+  },
+  beforeMount () {
+    this.verLogin()
+    this.buscarPerfil()
+  }
 }
 </script>
 <style>

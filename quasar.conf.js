@@ -22,7 +22,8 @@ module.exports = function (/* ctx */) {
     boot: [
 
       'i18n',
-      'axios'
+      'axios',
+      'md5'
     ],
 
     // https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -98,7 +99,9 @@ module.exports = function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Cookies'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

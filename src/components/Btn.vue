@@ -1,6 +1,6 @@
 <template>
   <div id="buttoncustom">
-    <q-btn  :color="color" :label="texto" :style="background" :outline="outline" :to="to" />
+    <q-btn  :color="color" :label="texto" :style="background" :outline="outline" :to="to" v-on:click="link" />
   </div>
 </template>
 
@@ -12,7 +12,8 @@ export default {
     color: String,
     texto: String,
     outline: Boolean,
-    to: String
+    to: String,
+    link: String
   },
   data () {
     return {

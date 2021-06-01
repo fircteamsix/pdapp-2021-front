@@ -22,7 +22,7 @@
             </q-item-section>
           </q-item>
           <template>
-            <q-item @click="$router.push('/perfil')" clickable v-ripple>
+            <q-item @click="$router.push({ path: '/perfil', query: { id: $route.query.id } })" clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="o_account_circle" />
               </q-item-section>
@@ -118,7 +118,7 @@
               <q-card class="my-card text-center" @click="$router.push('/criarcampanha')">
                 <q-card-section>
                   <q-avatar size="68px" font-size="50px" color="teal" text-color="white" icon="o_volunteer_activism" />
-                  <p style="margin: 2px 0 0 0; color:#228176; font-weight: 500;">Criar<br>Campanhas</p>
+                  <p style="margin: 2px 0 0 0; color:#228176; font-weight: 500;">Criar<br>Campanha</p>
                 </q-card-section>
               </q-card>
               <q-card @click="$router.push('/campanhas')" class="my-card text-center">
@@ -168,6 +168,7 @@
 </template>
 
 <script>
+import { Cookies } from 'quasar'
 export default {
   name: 'Home',
   data () {
@@ -175,6 +176,17 @@ export default {
       menuLeft: false,
       drawer: false
     }
+  },
+  methods: {
+    verLogin () {
+      const cookieLogin = Cookies.get('login-pdapp')
+      if (!cookieLogin) {
+        this.$router.push({ path: '/' })
+      }
+    }
+  },
+  beforeMount () {
+    this.verLogin()
   }
 }
 </script>
