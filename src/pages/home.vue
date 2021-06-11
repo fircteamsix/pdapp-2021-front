@@ -81,7 +81,7 @@
                 Termo de Uso
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
+            <q-item to="/informacoesuteis" clickable v-ripple>
               <q-item-section style="margin-left: 37px;">
                 Informações Úteis
               </q-item-section>
@@ -91,7 +91,7 @@
                 Política de Uso
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple>
+            <q-item to="/sobre" clickable v-ripple>
               <q-item-section style="margin-left: 37px;">
                 Sobre
               </q-item-section>
@@ -102,7 +102,7 @@
             <q-item-section avatar>
               <q-icon name="o_logout" />
             </q-item-section>
-            <q-item-section style="margin-left: -20px;">
+            <q-item-section @click="sair" style="margin-left: -20px;">
               <q-item-label>Sair</q-item-label>
             </q-item-section>
           </q-item>
@@ -178,6 +178,10 @@ export default {
     }
   },
   methods: {
+    sair () {
+      Cookies.remove('login-pdapp')
+      this.$router.push('/')
+    },
     verLogin () {
       const cookieLogin = Cookies.get('login-pdapp')
       if (!cookieLogin) {

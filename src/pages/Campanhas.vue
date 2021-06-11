@@ -7,12 +7,12 @@
           <p style="color:#228176; font-weight: bold; font-size: 24px; text-align: center; width: 100%; ">Campanhas</p>
 
           <q-list style="margin-top:70px">
-            <q-item @click="$router.push('/templatecampanha')" clickable v-ripple v-for="item in campanhas.titulo" :key="item">
+            <q-item @click="$router.push('/templatecampanha/' + item.id_campanha )" clickable v-ripple v-for="item in campanhas" :key="item.id_campanha">
               <q-item-section avatar>
                 <q-icon size="3em" style="color:#228176;" name="o_favorite_border" />
               </q-item-section>
               <!-- Buscar o titulo no cadastro via api -->
-              <q-item-section class="titulocampanha">{{ campanhas.titulo[0] }}</q-item-section>
+              <q-item-section class="titulocampanha">{{ item.titulo_paciente }}</q-item-section>
             </q-item>
           </q-list>
 
@@ -23,14 +23,30 @@
 </template>
 
 <script>
+import { Cookies } from 'quasar'
 export default {
   name: 'Campanhas',
   data () {
     return {
-      campanhas: {
-        titulo: ['Titulo da campanha aqui']
+      campanhas: null
+    }
+  },
+  methods: {
+    exibirCampanhas () {
+      this.$axios.get('http://localhost:3000/campanhas/usuarios/' + Cookies.get('login-pdapp')).then(respostas => {
+        this.campanhas = respostas.data.campanhas
+      })
+    },
+    verLogin () {
+      const cookieLogin = Cookies.get('login-pdapp')
+      if (!cookieLogin) {
+        this.$router.push({ path: '/' })
       }
     }
+  },
+  beforeMount () {
+    this.verLogin()
+    this.exibirCampanhas()
   }
 }
 </script>

@@ -15,8 +15,9 @@ const routes = [
       { path: '/termodeuso', component: () => import('pages/TermoUso.vue') },
       { path: '/politicadeuso', component: () => import('pages/PoliticaUso.vue') },
       { path: '/perfil', component: () => import('pages/Perfil.vue') },
-      { path: '/templatecampanha', component: () => import('pages/TemplateCampanha.vue') },
-      { path: '/ajudafeedback', component: () => import('pages/AjudaFeedback.vue') }
+      { path: '/templatecampanha/:id_campanha', component: () => import('pages/TemplateCampanha.vue') },
+      { path: '/ajudafeedback', component: () => import('pages/AjudaFeedback.vue') },
+      { path: '/sobre', component: () => import('pages/Sobre.vue') }
     ]
   },
 

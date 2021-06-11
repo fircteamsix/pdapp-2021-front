@@ -41,7 +41,7 @@
           <q-select style="margin-top:18px;" borderless v-model="tpSanguineo" :options="opSanguineo" label="Tipo Sanguíneo" />
 
         <div id="buttoncustom" class="row q-pa-lg justify-center">
-          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" to="/templatecampanha" />
+          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" @click="cadastrar" />
           <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/home"/>
         </div>
 
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { Cookies } from 'quasar'
 export default {
   // name: 'PageName',
   data () {
@@ -61,9 +62,30 @@ export default {
       tpSanguineo: null,
       tituloCampanha: null,
       localDoacao: null,
-      opSanguineo: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      opSanguineo: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'Todos os tipos sanguineos'],
       tpEstado: null,
       opEstado: ['Acre AC', 'Alagoas AL', 'Amapá AP', 'Amazonas AM', 'Bahia BA', 'Ceará CE', 'Espírito Santo ES', 'Goiás GO', 'Maranhão MA', 'Mato Grosso MT', 'Mato Grosso do Sul MS', 'Minas Gerais MG', 'Pará PA', 'Paraíba PB', 'Paraná PR', 'Pernambuco PE', 'Piauí PI', 'Rio de Janeiro RJ', 'Rio Grande do Norte RN', 'Rio Grande do Sul RS', 'Rondônia RO', 'Roraima RR', 'Santa Catarina SC', 'São Paulo SP', 'Sergipe SE', 'Tocantins TO', 'Distrito Federal DF']
+    }
+  },
+  methods: {
+    cadastrar () {
+      this.$axios.post('http://localhost:3000/campanhas', {
+        titulo_paciente: this.tituloCampanha,
+        data_inicio: this.dateInicio,
+        data_termino: this.dateTermino,
+        local_doacao: this.localDoacao,
+        tipo_sanguineo: this.tpSanguineo,
+        estado: this.tpEstado,
+        cd_usuario: Cookies.get('login-pdapp')
+      }).then(resposta => {
+        if (resposta.status !== 201) {
+          // erro
+        } else {
+          this.$router.push('/templatecampanha/' + resposta.data.campanha.id_campanha)
+        }
+      }).catch(erro => {
+        // Exibir alerta caso o status for diferente de 201
+      })
     }
   }
 }
