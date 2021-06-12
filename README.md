@@ -2,6 +2,34 @@
 
 Campanhas beneficentes de doação de sangue
 
+## Instalação do node
+
+Usando o Instalador do Node.
+
+```bash
+Acesse o link para baixar o instalador (De preferença as LTS)
+
+https://nodejs.org/en/
+
+```
+
+Usando o NVM
+
+```bash
+nvm list available
+
+nvm install 12.22.1 // Informe a versão que deseja. (De preferença as LTS)
+
+nvm use 12.22.1 // Comando para usar a versão que foi instalada.
+```
+
+## Instação principal
+ - Deve ter instalado o QUASAR CLI e YARN.
+```bash
+npm install -g yarn
+yarn global add @quasar/cli
+```
+
 ## Install the dependencies
 ```bash
 yarn

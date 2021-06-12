@@ -42,7 +42,7 @@
           <q-input v-model="usuario.confSenha" style="margin-top:18px;" input-style="width: 264px; height: 42px;" color="teal"  outlined label="Confirme sua senha" />
 
         <div id="buttoncustom" class="row q-pa-lg justify-center">
-          <q-btn  color="#FFF" label="ATUALIZAR" style="background: #228176; margin-top: 18px;" v-if="this.$route.query.id" @click="atualizar" />
+          <q-btn  color="#FFF" label="ATUALIZAR" style="background: #228176; margin-top: 18px;" v-if="this.estaLogado" @click="atualizar" />
           <q-btn  color="#FFF" label="SALVAR" style="background: #228176; margin-top: 18px;" v-else @click="cadastrar" />
           <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/"/>
         </div>
@@ -54,10 +54,12 @@
 </template>
 
 <script>
+import { Cookies } from 'quasar'
 export default {
   name: 'NovoPerfil',
   data () {
     return {
+      estaLogado: Cookies.get('login-pdapp'),
       usuario: {
         cd_usuario: null,
         nome: null,
@@ -66,8 +68,8 @@ export default {
         bairro: null,
         cidade: null,
         telefone: null,
-        senha: null,
-        confSenha: null,
+        senha: '',
+        confSenha: '',
         tipo_sanguineo: null,
         estado: null,
         data_nascimento: null,
@@ -82,7 +84,7 @@ export default {
   methods: {
     cadastrar () {
       // Confirmar as senhas
-      if (this.senha !== this.confSenha) {
+      if (this.usuario.senha !== this.usuario.confSenha) {
         // Exibir alerta que as senhas não estão iguais
       } else {
         // Senha estão iguais
@@ -96,16 +98,22 @@ export default {
       }
     },
     atualizar () {
-      this.$axios.put('http://localhost:3000/usuario/', this.usuario).then(resposta => {
-        if (resposta.status === 200) {
-          this.$router.push({ path: '/home', query: { id: this.usuario.cd_usuario } })
-        }
-      }).catch(erro => {
-        // em caso de erro
-      })
+      if (this.usuario.senha !== this.usuario.confSenha) {
+        // Exibir alerta que as senhas não estão iguais
+        console.log('Senhas diferentes')
+      } else {
+        console.log(this.usuario.senha)
+        this.$axios.put('http://localhost:3000/usuario/', this.usuario).then(resposta => {
+          if (resposta.status === 200) {
+            this.$router.push({ path: '/home' })
+          }
+        }).catch(erro => {
+          // em caso de erro
+        })
+      }
     },
     buscarPerfil () {
-      this.$axios.get('http://localhost:3000/usuario/' + this.$route.query.id).then(resposta => {
+      this.$axios.get('http://localhost:3000/usuario/' + this.estaLogado).then(resposta => {
         if (resposta.status === 202) {
           this.usuario = resposta.data.usuario
         }
@@ -115,7 +123,7 @@ export default {
     }
   },
   beforeMount () {
-    if (this.$route.query.id) {
+    if (this.estaLogado) {
       this.buscarPerfil()
     }
   }

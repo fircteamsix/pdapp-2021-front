@@ -17,7 +17,8 @@ const routes = [
       { path: '/perfil', component: () => import('pages/Perfil.vue') },
       { path: '/templatecampanha/:id_campanha', component: () => import('pages/TemplateCampanha.vue') },
       { path: '/ajudafeedback', component: () => import('pages/AjudaFeedback.vue') },
-      { path: '/sobre', component: () => import('pages/Sobre.vue') }
+      { path: '/sobre', component: () => import('pages/Sobre.vue') },
+      { path: '/novasenha', component: () => import('pages/NovaSenha.vue') }
     ]
   },
 

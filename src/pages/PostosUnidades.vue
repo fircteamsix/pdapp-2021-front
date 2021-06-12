@@ -6,6 +6,12 @@
           <q-icon @click="$router.push('/home')" name="o_arrow_back" style="color:#228176;" size="2em" left />
           <p style="color:#228176; font-weight: bold; font-size: 24px; text-align: center; width: 100%; ">Unidade de coleta</p>
           <q-select style="margin-top:18px;" filled v-model="tpEstado" :options="options" label="Estado (UF) do hemocentro" @input="buscarUnidades" />
+          <div style="color:#228176; margin-left: 18px; margin-top: 20px;">
+            <div class="hemocentro" v-for="hemocentro in hemocentros" :key="hemocentro.id_hemocentro">
+              <p><b>{{hemocentro.unidade}}</b><br>
+              <a :href="hemocentro.link" target="_blank">Acesse o site</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -17,6 +23,7 @@ export default {
   name: 'PostosUnidades',
   data () {
     return {
+      hemocentros: null,
       tpEstado: null,
       options: [
         {
@@ -132,28 +139,10 @@ export default {
   },
   methods: {
     buscarUnidades () {
-      const xhr = new XMLHttpRequest()
       // console.log('ESTADO SELECIONADO: ' + this.tpEstado.value)
-      xhr.onload = function () {
-        if (this.status === 200) {
-          try {
-            const obj = JSON.parse(this.responseText)
-            // const obj = this.responseText
-            for (const i in obj.hemocentros) {
-              console.log(obj.hemocentros[i].estado)
-              if (obj.hemocentros[i].estado.toLowerCase() === this.tpEstado.value) {
-                console.log(obj.hemocentros[i].link)
-              }
-            }
-          } catch (e) {
-            console.warn('O aquivo não é um JSON valido. erro: ' + e)
-          }
-        } else {
-          console.warn('Erro ao ler o arquivo.')
-        }
-      }
-      xhr.open('get', '../hemocentros.json')
-      xhr.send()
+      this.$axios.get('http://localhost:3000/hemocentros/' + this.tpEstado.value).then(respostas => {
+        this.hemocentros = respostas.data.hemocentros
+      })
     }
   }
 }

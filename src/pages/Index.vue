@@ -37,8 +37,8 @@
           </div>
 
             <div class="column items-center" style="height: 150px; padding: 2em 0 0;">
-                <q-btn flat  color="primary" label="Esqueceu sua senha?" style="width: 188px;" />
-                <q-btn flat  color="primary" label="Termo de uso" style="width: 188px;" />
+                <q-btn flat  color="primary" label="Esqueceu sua senha?" style="width: 188px;" to="/novasenha" />
+                <q-btn flat  color="primary" label="Termo de uso" style="width: 188px;" to="/termodeuso" />
             </div>
         </div>
       </div>
