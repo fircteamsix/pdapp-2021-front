@@ -50,7 +50,6 @@ yarn run lint
 quasar build
 ```
 
-
 ### Gitflow
 ```
 git flow feature start <nome>
