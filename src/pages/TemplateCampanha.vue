@@ -5,7 +5,7 @@
           <div class="col-xs-12 col-sm-12 col-md-7 col-lg-3">
             <div class="contentTop">
               <q-icon @click="$router.push('/home')" name="o_close" size="2em" left />
-              <q-icon class="iconDireita" @click="$router.push('/home')" name="o_share" size="2em"/>
+              <q-icon class="iconDireita" @click="compartilhar" name="o_share" size="2em"/>
               <div class="fotoicon column items-center" >
                 <q-avatar size="122px" style="background: #C65C44;">
                   <q-file
@@ -36,7 +36,7 @@
               </q-item>
             </q-list>
             <div id="buttoncustom" class="row q-pa-lg justify-center">
-              <q-btn  color="#FFF" label="EDITAR" style="background: #228176; margin-top: 120px;" />
+              <q-btn  color="#FFF" label="EDITAR" style="background: #228176; margin-top: 120px;" @click="editarCampanha" />
               <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/home"/>
             </div>
           </div>
@@ -66,6 +66,14 @@ export default {
     }
   },
   methods: {
+    compartilhar () {
+      navigator.share({ title: 'web.dev', text: 'Check out web.dev.', url: 'http://arfasystems.com' })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error))
+    },
+    editarCampanha () {
+      this.$router.push('/editarcampanha/' + this.$route.params.id_campanha)
+    },
     uploadImage (evt) {
       const data = new FormData()
       data.append('name', 'my-picture')

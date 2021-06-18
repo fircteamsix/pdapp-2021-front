@@ -41,7 +41,8 @@
           <q-select style="margin-top:18px;" borderless v-model="tpSanguineo" :options="opSanguineo" label="Tipo Sanguíneo" />
 
         <div id="buttoncustom" class="row q-pa-lg justify-center">
-          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" @click="cadastrar" />
+          <q-btn  color="#FFF" label="ATUALIZAR" style="background: #228176; margin-top: 18px;" v-if="this.rotaEditar" @click="atualizar" />
+          <q-btn  color="#FFF" label="CRIAR" style="background: #228176; margin-top: 18px;" v-else @click="cadastrar" />
           <q-btn  color="#FFF" label="CANCELAR" style="color: #228176; margin-top: 18px;" outline  to="/home"/>
         </div>
 
@@ -57,6 +58,7 @@ export default {
   // name: 'PageName',
   data () {
     return {
+      rotaEditar: this.$route.params.id_campanha,
       dateInicio: null,
       dateTermino: null,
       tpSanguineo: null,
@@ -86,7 +88,38 @@ export default {
       }).catch(erro => {
         // Exibir alerta caso o status for diferente de 201
       })
+    },
+    atualizar () {
+      this.$axios.put('http://localhost:3000/campanhas/' + this.$route.params.id_campanha, {
+        titulo_paciente: this.tituloCampanha,
+        data_inicio: this.dateInicio,
+        data_termino: this.dateTermino,
+        local_doacao: this.localDoacao,
+        tipo_sanguineo: this.tpSanguineo,
+        estado: this.tpEstado
+      }).then(resposta => {
+        if (resposta.status !== 200) {
+          // erro
+        } else {
+          this.$router.push('/templatecampanha/' + this.$route.params.id_campanha)
+        }
+      }).catch(erro => {
+        // Exibir alerta caso o status for diferente de 200
+      })
+    },
+    buscarCampanha () {
+      this.$axios.get('http://localhost:3000/campanhas/' + this.$route.params.id_campanha).then(resposta => {
+        this.dateInicio = resposta.data.campanha.data_inicio
+        this.dateTermino = resposta.data.campanha.data_termino
+        this.tpSanguineo = resposta.data.campanha.tipo_sanguineo
+        this.tituloCampanha = resposta.data.campanha.titulo_paciente
+        this.localDoacao = resposta.data.campanha.local_doacao
+        this.tpEstado = resposta.data.campanha.estado
+      })
     }
+  },
+  beforeMount () {
+    this.buscarCampanha()
   }
 }
 </script>
