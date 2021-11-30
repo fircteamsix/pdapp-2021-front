@@ -69,7 +69,8 @@ export default {
       await this.$axios.get('http://localhost:3000/usuario/' + this.usuario.email + '/' + this.usuario.senha).then(resposta => {
         if (resposta.status === 202) {
           const chave = resposta.data.usuario
-          Cookies.set('login-pdapp', chave, { expires: '1h' })
+          console.log(chave)
+          Cookies.set('login-pdapp', { chave: chave.cd_usuario, email: chave.email }, { expires: '1h' })
           this.$router.push({ path: '/home' })
         }
       }).catch(erro => {

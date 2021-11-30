@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     cadastrar () {
+      const user = Cookies.get('login-pdapp')
       this.$axios.post('http://localhost:3000/campanhas', {
         titulo_paciente: this.tituloCampanha,
         data_inicio: this.dateInicio,
@@ -78,7 +79,7 @@ export default {
         local_doacao: this.localDoacao,
         tipo_sanguineo: this.tpSanguineo,
         estado: this.tpEstado,
-        cd_usuario: Cookies.get('login-pdapp')
+        cd_usuario: user.chave
       }).then(resposta => {
         if (resposta.status !== 201) {
           // erro
@@ -108,14 +109,16 @@ export default {
       })
     },
     buscarCampanha () {
-      this.$axios.get('http://localhost:3000/campanhas/' + this.$route.params.id_campanha).then(resposta => {
-        this.dateInicio = resposta.data.campanha.data_inicio
-        this.dateTermino = resposta.data.campanha.data_termino
-        this.tpSanguineo = resposta.data.campanha.tipo_sanguineo
-        this.tituloCampanha = resposta.data.campanha.titulo_paciente
-        this.localDoacao = resposta.data.campanha.local_doacao
-        this.tpEstado = resposta.data.campanha.estado
-      })
+      if (this.route.params.id_campanha) {
+        this.$axios.get('http://localhost:3000/campanhas/' + this.$route.params.id_campanha).then(resposta => {
+          this.dateInicio = resposta.data.campanha.data_inicio
+          this.dateTermino = resposta.data.campanha.data_termino
+          this.tpSanguineo = resposta.data.campanha.tipo_sanguineo
+          this.tituloCampanha = resposta.data.campanha.titulo_paciente
+          this.localDoacao = resposta.data.campanha.local_doacao
+          this.tpEstado = resposta.data.campanha.estado
+        })
+      }
     }
   },
   beforeMount () {

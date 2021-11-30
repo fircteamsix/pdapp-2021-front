@@ -115,7 +115,9 @@ export default {
       }
     },
     buscarPerfil () {
-      this.$axios.get('http://localhost:3000/usuario/' + Cookies.get('login-pdapp')).then(resposta => {
+      const user = Cookies.get('login-pdapp')
+      console.log(user)
+      this.$axios.get('http://localhost:3000/usuario/' + user.chave).then(resposta => {
         if (resposta.status === 202) {
           this.usuario = resposta.data.usuario
           this.foto = 'http://localhost:3000/img/' + resposta.data.usuario.foto

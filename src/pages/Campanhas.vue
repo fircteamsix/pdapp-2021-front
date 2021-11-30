@@ -33,7 +33,8 @@ export default {
   },
   methods: {
     exibirCampanhas () {
-      this.$axios.get('http://localhost:3000/campanhas/usuarios/' + Cookies.get('login-pdapp')).then(respostas => {
+      const user = Cookies.get('login-pdapp')
+      this.$axios.get('http://localhost:3000/campanhas/usuarios/' + user.chave).then(respostas => {
         this.campanhas = respostas.data.campanhas
       })
     },
